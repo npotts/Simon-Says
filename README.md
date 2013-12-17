@@ -1,5 +1,12 @@
-Simon Says
+Simon Sings
 ==========
+
+Simon Sings is a simple firmware edit to turn the sparkfun Simon Says kit into a toy more adequate for a 2 year old.  Simon Says now plays tones based on which key is pressed.
+
+The Simon Sings firmware (located under **/Firmware**) will cause your Simon Says kit sing depending on which button is pressed. You will need to manually add connections to a TTL level RS232 port (Ground, TxD, RxD, and DTR) in order to program via arduino.
+
+Original Kit
+------------
 
 [![Simon Says](https://dlnmh9ip6v2uc.cloudfront.net/images/products/1/0/5/4/7/Simon_Action.jpg)  
 *Simon Says (KIT-10547)*](https://www.sparkfun.com/products/10547)
