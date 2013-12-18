@@ -15,7 +15,7 @@ beeping (aka music).
 //how often should we blink when in attractMode
 #define BLINK_EVERY 250
 //wait these number of ms until calling attractMode.  60*1000 = 1 min
-#define TIME_TILL_BLINKY 60*1000
+#define TIME_TILL_BLINKY 60000
 
 /*
 Make this as long as you wish.  This melody is blatently taken from the
@@ -53,7 +53,7 @@ void setup() {
   pinMode(BUZZER1,       OUTPUT);
   pinMode(BUZZER2,       OUTPUT);
   // setup the "BUZZER1" side of the buzzer to stay low, while we play the tone on the other pin.
-  digitalWrite(BUZZER1, LOW); 
+  digitalWrite(BUZZER1,   LOW); 
 
   attractMode(); //make the think blink like crazy
 }
@@ -91,16 +91,16 @@ byte attractMode(void) {
     //loop for BLINK_EVERY ms lookin for a keypress with LEDs ON
     setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE | CHOICE_YELLOW); // Turn all LEDs on
     //send a tone of the melody
-    tone(BUZZER2, melody[melody_pos++], BLINK_EVERY+10); melody_pos %= sizeof(melody); //force melody_pos to [0: sizeof(melody)), where sizeof(melody) is always positive
+    tone(BUZZER2, melody[melody_pos++], BLINK_EVERY); melody_pos %= sizeof(melody); //force melody_pos to [0: sizeof(melody)), where sizeof(melody) is always positive
     time = millis();
     //this while polls for a checkButton, set the value to button, and repeats for BLINK_EVERY ms
-    while( ( (button = checkButton()) == CHOICE_NONE) && (millis() - time < BLINK_EVERY)) ;
+    while( ( (button = checkButton()) == CHOICE_NONE) && (millis() - time < BLINK_EVERY + 10)) ;
     if (button != CHOICE_NONE) return button; //signal to bail out of 
     setLEDs(CHOICE_NONE);
     //send another tone of the melody
-    tone(BUZZER2, melody[melody_pos++], BLINK_EVERY+10); melody_pos %= sizeof(melody);
+    tone(BUZZER2, melody[melody_pos++], BLINK_EVERY); melody_pos %= sizeof(melody);
     time = millis();
-    while( ( (button = checkButton()) == CHOICE_NONE) && (millis() - time < BLINK_EVERY)) ;
+    while( ( (button = checkButton()) == CHOICE_NONE) && (millis() - time < BLINK_EVERY + 10)) ;
     if (button != CHOICE_NONE) return button;
   }
 }
@@ -110,7 +110,7 @@ byte getAKeyPress() {
   unsigned long time=millis(), offtime=millis();
   while((key = checkButton()) == CHOICE_NONE) {
     if (millis() - time > TONE_LENGTH)  setLEDs(CHOICE_NONE);
-    if (millis() - offtime > TIME_TILL_BLINKY)      return attractMode();
+    if (millis() - offtime > TIME_TILL_BLINKY)    return attractMode();
   }
 }
 void loop() {
@@ -131,4 +131,6 @@ void loop() {
   case CHOICE_YELLOW: tone(BUZZER2, NOTE_G5, TONE_LENGTH); break;
   }
 }
+
+
 
