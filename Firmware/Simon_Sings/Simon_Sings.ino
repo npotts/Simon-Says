@@ -14,7 +14,7 @@ beeping (aka music).
 #define TONE_LENGTH 10
 //how often should we blink when in attractMode
 #define BLINK_EVERY 250
-//wait these number of ms until calling attractMode
+//wait these number of ms until calling attractMode.  60*1000 = 1 min
 #define TIME_TILL_BLINKY 60*1000
 
 /*
@@ -131,3 +131,4 @@ void loop() {
   case CHOICE_YELLOW: tone(BUZZER2, NOTE_G5, TONE_LENGTH); break;
   }
 }
+
